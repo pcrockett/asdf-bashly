@@ -17,6 +17,7 @@
 
 - `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
 - A recent version of Ruby installed by [asdf-ruby](https://github.com/asdf-vm/asdf-ruby)
+  - It needs to be set up globally; after installing with `asdf install ruby latest`, also run `asdf global ruby latest`
   - I'm not a Ruby dev; I won't test how this behaves on a system with Ruby installed in other ways.
 
 # Install

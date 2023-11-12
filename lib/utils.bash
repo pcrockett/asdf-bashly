@@ -46,7 +46,7 @@ download_release() {
 install_version() {
 	local install_type="$1"
 	local version="$2"
-	local install_path="${3%/bin}/bin"
+	local install_path="${3}"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
@@ -55,8 +55,9 @@ install_version() {
 	(
 		mkdir -p "$install_path"
 
-		echo "installing ${ASDF_DOWNLOAD_PATH} to ${install_path}..."
-		gem install --local "${ASDF_DOWNLOAD_PATH}" --install-dir "${install_path}"
+		local gem_file="${ASDF_DOWNLOAD_PATH}/${TOOL_NAME}-${ASDF_INSTALL_VERSION}.gem"
+		echo "installing ${gem_file} to ${install_path}..."
+		gem install --local "${gem_file}" --install-dir "${install_path}"
 
 		# TODO: Assert bashly executable exists.
 		local tool_cmd
