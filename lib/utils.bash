@@ -33,20 +33,17 @@ list_all_versions() {
 }
 
 download_release() {
-	local version filename url
+	local version bin_dir
 	version="$1"
-	filename="$2"
+	bin_dir="$2"
 
-	url="https://rubygems.org/downloads/${TOOL_NAME}-${version}.gem"
-
-	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+	gem install "${TOOL_NAME}" --version "${version}" --bindir "${bin_dir}"
 }
 
 install_version() {
 	local install_type="$1"
 	local version="$2"
-	local install_path="${3}"
+	local install_path="${3%/bin}/bin"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
@@ -55,11 +52,9 @@ install_version() {
 	(
 		mkdir -p "$install_path"
 
-		local gem_file="${ASDF_DOWNLOAD_PATH}/${TOOL_NAME}-${ASDF_INSTALL_VERSION}.gem"
-		echo "installing ${gem_file} to ${install_path}..."
-		gem install --local "${gem_file}" --install-dir "${install_path}"
+		echo "installing ${ASDF_DOWNLOAD_PATH} to ${install_path}..."
+		cp -r "${ASDF_DOWNLOAD_PATH}/bashly" "${install_path}"
 
-		# TODO: Assert bashly executable exists.
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
