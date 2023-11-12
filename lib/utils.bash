@@ -33,31 +33,37 @@ list_all_versions() {
 }
 
 download_release() {
-	local version bin_dir
+	local version download_dir
 	version="$1"
-	bin_dir="$2"
+	download_dir="$2"
 
-	gem install "${TOOL_NAME}" --version "${version}" --bindir "${bin_dir}"
+	GEM_HOME="${download_dir}" gem install "${TOOL_NAME}:${version}"
 }
 
 install_version() {
 	local install_type="$1"
 	local version="$2"
-	local install_path="${3%/bin}/bin"
+	local plugin_dir="${3}"
+	local install_path="${4}"
+	local gem_home="${install_path}/gem_home"
+	local bin_dir="${install_path}/bin"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
 	fi
 
 	(
-		mkdir -p "$install_path"
+		mkdir -p "${gem_home}"
 
-		echo "installing ${ASDF_DOWNLOAD_PATH} to ${install_path}..."
-		cp -r "${ASDF_DOWNLOAD_PATH}/bashly" "${install_path}"
+		echo "installing ${ASDF_DOWNLOAD_PATH} to ${gem_home}..."
+		cp -r "${ASDF_DOWNLOAD_PATH}/"* "${gem_home}"
+
+		mkdir -p "${bin_dir}"
+		cp "${plugin_dir}/lib/bashly_wrapper.sh" "${bin_dir}/bashly"
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
+		test -x "$bin_dir/$tool_cmd" || fail "Expected $bin_dir/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
 	) || (
