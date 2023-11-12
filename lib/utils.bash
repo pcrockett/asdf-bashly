@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for bashly.
 GH_REPO="https://github.com/DannyBen/bashly"
 TOOL_NAME="bashly"
 TOOL_TEST="bashly --version"
@@ -14,7 +13,6 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if bashly is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
 	curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -27,12 +25,10 @@ sort_versions() {
 list_github_tags() {
 	git ls-remote --tags --refs "$GH_REPO" |
 		grep -o 'refs/tags/.*' | cut -d/ -f3- |
-		sed 's/^v//' # NOTE: You might want to adapt this sed to remove non-version strings from tags
+		sed 's/^v//'
 }
 
 list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if bashly has other means of determining installable versions.
 	list_github_tags
 }
 
@@ -41,8 +37,7 @@ download_release() {
 	version="$1"
 	filename="$2"
 
-	# TODO: Adapt the release URL convention for bashly
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	url="https://rubygems.org/downloads/${TOOL_NAME}-${version}.gem"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -59,7 +54,9 @@ install_version() {
 
 	(
 		mkdir -p "$install_path"
-		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+
+		echo "installing ${ASDF_DOWNLOAD_PATH} to ${install_path}..."
+		gem install --local "${ASDF_DOWNLOAD_PATH}" --install-dir "${install_path}"
 
 		# TODO: Assert bashly executable exists.
 		local tool_cmd

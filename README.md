@@ -15,10 +15,9 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
 - `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
+- A recent version of Ruby installed by [asdf-ruby](https://github.com/asdf-vm/asdf-ruby)
+  - I'm not a Ruby dev; I won't test how this behaves on a system with Ruby installed in other ways.
 
 # Install
 
