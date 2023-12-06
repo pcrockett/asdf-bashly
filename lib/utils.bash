@@ -37,7 +37,10 @@ download_release() {
 	version="$1"
 	download_dir="$2"
 
-	GEM_HOME="${download_dir}" gem install "${TOOL_NAME}:${version}"
+	local gem_home="${download_dir}/gem_home"
+	mkdir -p "${gem_home}"
+
+	GEM_HOME="${gem_home}" gem install "${TOOL_NAME}:${version}"
 }
 
 install_version() {
@@ -45,7 +48,6 @@ install_version() {
 	local version="$2"
 	local plugin_dir="${3}"
 	local install_path="${4}"
-	local gem_home="${install_path}/gem_home"
 	local bin_dir="${install_path}/bin"
 
 	if [ "$install_type" != "version" ]; then
@@ -53,10 +55,10 @@ install_version() {
 	fi
 
 	(
-		mkdir -p "${gem_home}"
+		mkdir -p "${install_path}"
 
-		echo "installing ${ASDF_DOWNLOAD_PATH} to ${gem_home}..."
-		cp -r "${ASDF_DOWNLOAD_PATH}/"* "${gem_home}"
+		echo "installing ${ASDF_DOWNLOAD_PATH} to ${install_path}..."
+		cp -r "${ASDF_DOWNLOAD_PATH}/"* "${install_path}"
 
 		mkdir -p "${bin_dir}"
 		cp "${plugin_dir}/lib/bashly_wrapper.sh" "${bin_dir}/bashly"
