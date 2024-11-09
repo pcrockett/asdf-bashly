@@ -40,7 +40,9 @@ download_release() {
 	local gem_home="${download_dir}/gem_home"
 	mkdir -p "${gem_home}"
 
-	GEM_HOME="${gem_home}" gem install \
+	GEM_HOME="${gem_home}" \
+		GEM_PATH="${gem_home}" \
+		gem install \
 		--install-dir "${gem_home}" \
 		"${TOOL_NAME}:${version}"
 }
