@@ -23,6 +23,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '${{ matrix.ruby_version }}'
+          bundler-cache: true
       - name: install libyaml
         if: "${{ matrix.os == 'ubuntu-latest' }}"
         run: sudo apt-get install --yes libyaml-dev
