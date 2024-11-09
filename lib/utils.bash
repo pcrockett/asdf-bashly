@@ -43,7 +43,6 @@ download_release() {
 	GEM_HOME="${gem_home}" \
 		GEM_PATH="${gem_home}" \
 		gem install \
-		--install-dir "${gem_home}" \
 		"${TOOL_NAME}:${version}"
 }
 
