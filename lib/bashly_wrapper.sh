@@ -8,4 +8,5 @@ gem_home="${install_dir}/gem_home"
 
 GEM_HOME="${gem_home}" \
 	GEM_PATH="${gem_home}" \
+	PATH="${gem_home}/bin:${PATH}" \
 	"${gem_home}/bin/bashly" "${@}"
