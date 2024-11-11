@@ -41,6 +41,9 @@ ensure_bundler() {
 }
 
 create_bundle() {
+	local working_dir="${1}"
+	pushd "${working_dir}" &>/dev/null
+
 	ensure_bundler
 	bundle init
 	mkdir -p artifacts
@@ -54,6 +57,8 @@ create_bundle() {
 	# rid of that warning.
 	bundle add fiddle
 	bundle add logger
+
+	popd &>/dev/null
 }
 
 download_release() {
@@ -67,7 +72,7 @@ download_release() {
 	GEM_HOME="${gem_home}" \
 		GEM_PATH="${gem_home}" \
 		PATH="${gem_home}/bin:${PATH}" \
-		create_bundle
+		create_bundle "${download_dir}"
 }
 
 install_version() {
