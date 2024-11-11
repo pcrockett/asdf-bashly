@@ -14,11 +14,16 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
+        ruby_version:
+          - '3.1'
+          - '3.2'
+          - '3.3'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'
+          ruby-version: '${{ matrix.ruby_version }}'
+          bundler-cache: true
       - name: asdf_plugin_test
         uses: asdf-vm/actions/plugin-test@v3
         with:
