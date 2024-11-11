@@ -32,18 +32,42 @@ list_all_versions() {
 	list_github_tags
 }
 
+ensure_bundler() {
+	if command -v bundle &>/dev/null && bundle --version &>/dev/null; then
+		return 0
+	fi
+
+	gem install --no-user-install bundler
+}
+
+create_bundle() {
+	ensure_bundler
+	bundle init
+	mkdir -p artifacts
+	bundle config set path artifacts
+	bundle add bashly --version "= ${version}"
+
+	# get rid of warnings at runtime
+	#
+	# these deps are in the ruby stdlib, but will soon
+	# be moved to their own gems. installing them gets
+	# rid of that warning.
+	bundle add fiddle
+	bundle add logger
+}
+
 download_release() {
 	local version download_dir
 	version="$1"
 	download_dir="$2"
 
-	local gem_home="${download_dir}/gem_home"
+	local gem_home="${download_dir}/gem"
 	mkdir -p "${gem_home}"
 
 	GEM_HOME="${gem_home}" \
 		GEM_PATH="${gem_home}" \
-		gem install \
-		"${TOOL_NAME}:${version}"
+		PATH="${gem_home}/bin:${PATH}" \
+		create_bundle
 }
 
 install_version() {
