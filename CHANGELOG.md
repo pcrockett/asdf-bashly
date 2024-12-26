@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/pcrockett/asdf-bashly/compare/v1.0.1...v1.0.2) (2024-12-26)
+
+
+### Bug Fixes
+
+* set GEM_HOME and GEM_PATH in bashly wrapper ([#16](https://github.com/pcrockett/asdf-bashly/issues/16)) ([d74e3f6](https://github.com/pcrockett/asdf-bashly/commit/d74e3f6eda24d39e5d5d5f797b0f487ede577fb6))
+
 ## [1.0.1](https://github.com/pcrockett/asdf-bashly/compare/v1.0.0...v1.0.1) (2024-11-11)
 
 
