@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/pcrockett/asdf-bashly/compare/v1.0.2...v1.0.3) (2025-08-18)
+
+
+### Bug Fixes
+
+* remove gross unnecessary latest-stable script ([ba360e5](https://github.com/pcrockett/asdf-bashly/commit/ba360e54b899ded952724483f7ad026b42bad88c))
+* use version number when installing latest ([#24](https://github.com/pcrockett/asdf-bashly/issues/24)) ([5087199](https://github.com/pcrockett/asdf-bashly/commit/5087199083e7fc05bd9a409d9771ecf644f60db0))
+
 ## [1.0.2](https://github.com/pcrockett/asdf-bashly/compare/v1.0.1...v1.0.2) (2024-12-26)
 
 
