@@ -43,6 +43,11 @@ ensure_bundler() {
 create_bundle() {
 	local working_dir="${1}"
 	local version="${2}"
+
+	if [ "${version}" = "latest" ]; then
+		version="$(list_all_versions | sort_versions | tail -n 1)"
+	fi
+
 	pushd "${working_dir}" &>/dev/null
 
 	ensure_bundler
