@@ -24,7 +24,7 @@ sort_versions() {
 
 list_github_tags() {
 	git ls-remote --tags --refs "$GH_REPO" |
-		grep -o 'refs/tags/.*' | cut -d/ -f3- |
+		grep -o 'refs/tags/v[[:digit:]]\+.*' | cut -d/ -f3- |
 		sed 's/^v//'
 }
 
@@ -42,6 +42,12 @@ ensure_bundler() {
 
 create_bundle() {
 	local working_dir="${1}"
+	local version="${2}"
+
+	if [ "${version}" = "latest" ]; then
+		version="$(list_all_versions | sort_versions | tail -n 1)"
+	fi
+
 	pushd "${working_dir}" &>/dev/null
 
 	ensure_bundler
@@ -72,7 +78,7 @@ download_release() {
 	GEM_HOME="${gem_home}" \
 		GEM_PATH="${gem_home}" \
 		PATH="${gem_home}/bin:${PATH}" \
-		create_bundle "${download_dir}"
+		create_bundle "${download_dir}" "${version}"
 }
 
 install_version() {
