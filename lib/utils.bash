@@ -24,7 +24,7 @@ sort_versions() {
 
 list_github_tags() {
 	git ls-remote --tags --refs "$GH_REPO" |
-		grep -o 'refs/tags/.*' | cut -d/ -f3- |
+		grep -o 'refs/tags/v[[:digit:]]\+.*' | cut -d/ -f3- |
 		sed 's/^v//'
 }
 
@@ -66,10 +66,6 @@ download_release() {
 	local version download_dir
 	version="$1"
 	download_dir="$2"
-
-	if [ "${version}" == "latest" ]; then
-		version="$(list_all_versions | sort_versions | tail -n 1)"
-	fi
 
 	local gem_home="${download_dir}/gem"
 	mkdir -p "${gem_home}"
