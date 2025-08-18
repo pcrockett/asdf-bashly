@@ -42,6 +42,7 @@ ensure_bundler() {
 
 create_bundle() {
 	local working_dir="${1}"
+	local version="${2}"
 	pushd "${working_dir}" &>/dev/null
 
 	ensure_bundler
@@ -66,13 +67,17 @@ download_release() {
 	version="$1"
 	download_dir="$2"
 
+	if [ "${version}" == "latest" ]; then
+		version="$(list_all_versions | sort_versions | tail -n 1)"
+	fi
+
 	local gem_home="${download_dir}/gem"
 	mkdir -p "${gem_home}"
 
 	GEM_HOME="${gem_home}" \
 		GEM_PATH="${gem_home}" \
 		PATH="${gem_home}/bin:${PATH}" \
-		create_bundle "${download_dir}"
+		create_bundle "${download_dir}" "${version}"
 }
 
 install_version() {
