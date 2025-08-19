@@ -28,4 +28,4 @@ jobs:
         uses: asdf-vm/actions/plugin-test@1902764435ca0dd2f3388eea723a4f92a4eb8302 # v4.0.0
         with:
           command: bashly --version
-          gitref: ${{ github.head_ref }}
+          gitref: ${{ github.head_ref || github.ref_name }} # different github variables depending on whether we're running on a branch or a PR
