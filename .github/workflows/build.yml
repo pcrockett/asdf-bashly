@@ -20,7 +20,7 @@ jobs:
           - '3.4'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: ruby/setup-ruby@4ff6f3611a42bc75eee1e5138240eb1613f48c8f # v1.266.0
+      - uses: ruby/setup-ruby@8aeb6ff8030dd539317f8e1769a044873b56ea71 # v1.268.0
         with:
           ruby-version: '${{ matrix.ruby_version }}'
           bundler-cache: true
