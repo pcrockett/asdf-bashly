@@ -20,12 +20,12 @@ jobs:
           - '3.4'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: ruby/setup-ruby@4ff6f3611a42bc75eee1e5138240eb1613f48c8f # v1.266.0
+      - uses: ruby/setup-ruby@8aeb6ff8030dd539317f8e1769a044873b56ea71 # v1.268.0
         with:
           ruby-version: '${{ matrix.ruby_version }}'
           bundler-cache: true
       - name: asdf_plugin_test
-        uses: asdf-vm/actions/plugin-test@1902764435ca0dd2f3388eea723a4f92a4eb8302 # v4.0.0
+        uses: asdf-vm/actions/plugin-test@b7bcd026f18772e44fe1026d729e1611cc435d47 # v4.0.1
         with:
           command: bashly --version
           gitref: ${{ github.head_ref || github.ref_name }} # different github variables depending on whether we're running on a branch or a PR
