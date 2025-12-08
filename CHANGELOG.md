@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/pcrockett/asdf-bashly/compare/v1.0.3...v1.0.4) (2025-12-08)
+
+
+### Bug Fixes
+
+* **ci:** make build work on branches or PRs ([6431fa9](https://github.com/pcrockett/asdf-bashly/commit/6431fa9d3ad54e24abff7ec56c4723ec0295f239))
+
 ## [1.0.3](https://github.com/pcrockett/asdf-bashly/compare/v1.0.2...v1.0.3) (2025-08-18)
 
 
